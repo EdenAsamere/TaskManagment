@@ -12,15 +12,18 @@ export const login = async (req: Request, res: Response) => {
             data: result,
         });
     } catch (error) {
+        let message = 'Login failed';
+        if (error instanceof Error) {
+            message = error.message;
+        }
         res.status(401).json({
-            message: error.message || 'Login failed',
+            message,
         });
     }
 }
 
 export const register = async(req:Request, res:Response) =>{
     try{
-
         const {email, password, firstName, lastName} = req.body;
         const userData = {
             email, password, firstName, lastName
@@ -31,9 +34,13 @@ export const register = async(req:Request, res:Response) =>{
             data: result,
         });
     }
-     catch (error) {
+    catch (error) {
+        let message = 'Registration failed';
+        if (error instanceof Error) {
+            message = error.message;
+        }
         res.status(401).json({
-            message: error.message || 'Registration failed',
+            message,
         });
     }
 }

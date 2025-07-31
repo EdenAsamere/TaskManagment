@@ -17,7 +17,11 @@ export const createTask = async (req: Request, res: Response) => {
     const task = await taskService.createTask({ ...req.body, createdBy: createdBy });
     res.status(201).json({ message: 'Task created', data: task });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    let message = 'Failed to create task';
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    res.status(400).json({ message });
   }
 };
 
@@ -26,7 +30,11 @@ export const getTasksByProject = async (req: Request, res: Response) => {
     const tasks = await taskService.getTasksByProject(req.params.projectId);
     res.status(200).json({ data: tasks });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    let message = 'Failed to get tasks by project';
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    res.status(400).json({ message });
   }
 };
 
@@ -39,7 +47,11 @@ export const updateTaskStatus = async (req: Request, res: Response) => {
     await projectService.updateProjectStatus(task.project.toString());
     res.status(200).json({ message: 'Task status updated', data: task });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    let message = 'Failed to update task status';
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    res.status(400).json({ message });
   }
 };
 
@@ -55,7 +67,11 @@ export const assignTaskToUser = async (req: Request, res: Response) => {
     res.status(200).json({ message: 'Task assigned to user', data: task });
   }
     catch (error) {
-    res.status(400).json({ message: error.message });
+    let message = 'Failed to assign task to user';
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    res.status(400).json({ message });
   }
 };
 
@@ -66,7 +82,11 @@ export const getTaskById = async (req: Request, res: Response) => {
     const task = await taskService.getTaskById(req.params.taskId);
     res.status(200).json({ data: task });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    let message = 'Task not found';
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    res.status(404).json({ message });
   }
 };
 
@@ -75,7 +95,11 @@ export const deleteTask = async (req: Request, res: Response) => {
     const result = await taskService.deleteTask(req.params.taskId);
     res.status(200).json(result);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    let message = 'Failed to delete task';
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    res.status(404).json({ message });
   }
 };
 
@@ -86,7 +110,11 @@ export const getAllPaginatedTasks = async (req: Request, res: Response) => {
     const tasks = await taskService.getAllPaginatedTasks(page, limit);
     res.status(200).json({ data: tasks });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    let message = 'Failed to get paginated tasks';
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    res.status(400).json({ message });
   }
 };
 
@@ -95,7 +123,11 @@ export const setTaskDueDate = async (req: Request, res: Response) => {
     const task = await taskService.setTaskDueDate(req.params.taskId, new Date(req.body.dueDate));
     res.status(200).json({ message: 'Task due date set', data: task });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    let message = 'Failed to set task due date';
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    res.status(400).json({ message });
   }
 };
 
@@ -104,6 +136,10 @@ export const setTaskStartDate = async (req: Request, res: Response) => {
     const task = await taskService.setTaskStartDate(req.params.taskId, new Date(req.body.startDate));
     res.status(200).json({ message: 'Task start date set', data: task });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    let message = 'Failed to set task start date';
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    res.status(400).json({ message });
   }
 };
