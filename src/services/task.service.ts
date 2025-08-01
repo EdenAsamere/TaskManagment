@@ -77,6 +77,14 @@ export class TaskService {
         return task.save();
     }
 
+    async removeTaskDueDate(taskId: string) {
+        return Task.findByIdAndUpdate(
+            taskId,
+            { $unset: { dueDate: "" } },
+            { new: true }
+        );
+    }
+
     async setTaskStartDate(taskId: string, startDate: Date) {
         const task = await Task.findById(taskId);   
         if (!task) {

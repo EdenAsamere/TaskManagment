@@ -131,6 +131,23 @@ export const setTaskDueDate = async (req: Request, res: Response) => {
   }
 };
 
+export const removeTaskDueDate = async(req:Request, res:Response) =>{
+  const taskId = req.params.taskId
+  try{
+    await taskService.removeTaskDueDate(taskId)
+    res.status(200).json({message:'Task due date removed'})
+  }
+  catch (error) {
+    let message = 'Failed to remove task due date';
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    res.status(400).json({ message });
+  }
+
+
+}
+
 export const setTaskStartDate = async (req: Request, res: Response) => {
   try {
     const task = await taskService.setTaskStartDate(req.params.taskId, new Date(req.body.startDate));

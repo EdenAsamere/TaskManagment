@@ -1,6 +1,7 @@
 import User from "../models/user.model";
 import Project from "../models/project.model";
 import Task from '../models/task.model';
+import { threadId } from "worker_threads";
 
 
 export class ProjectService {
@@ -117,6 +118,24 @@ export class ProjectService {
 
     return project;
     }
+
+    async setProjectDueDate(projectId: string, dueDate: Date) {
+        const project = await Project.findById(projectId);
+        if (!project) {
+            throw new Error('Project not found');
+        }
+        project.deadline = dueDate;
+        return project.save();
+    }
+
+   async removeProjectDueDate(projectId: string) {
+    return Project.findByIdAndUpdate(
+        projectId,
+        { $unset: { deadline: "" } },
+        { new: true }
+    );
+}
+
     // async getTasksByProject(projectId: string) {
     //     const tasks = await Task.find({ project: projectId })
     //         .populate('assignedTo', 'email firstName lastName')

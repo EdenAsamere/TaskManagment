@@ -109,6 +109,31 @@ export const addTeamMember = async (req: Request, res: Response) => {
     }
 };
 
+export const setProjectDueDate = async(req:Request, res:Response) => {
+    const projectId = req.params.projectId;
+    const dueDate =  req.body.dueDate;
+    try{
+        await projectService.setProjectDueDate(projectId, dueDate);
+        return res.status(200).json({ message: 'Project due date updated successfully' });
+    } catch (error) {
+        console.error('Error setting project due date:', error);
+        return res.status(404).json({ message: 'Project not found' });
+    }
+
+}
+
+export const removeProjectDueDate = async(req:Request,res:Response) =>{
+    const projectId = req.params.projectId;
+    try{
+        await projectService.removeProjectDueDate(projectId);
+        return res.status(200).json({message:'Project due date removed'})
+    }
+    catch (error) {
+        console.error('Error removing project due date:', error);
+        return res.status(404).json({ message: 'Project not found' });
+    }
+}
+
 // export const getProjectTasks = async (req: Request, res: Response) => {
 //     const projectId = req.params.id;
 //     try {
