@@ -117,11 +117,11 @@ export class ProjectService {
 
     return project;
     }
-    async getTasksByProject(projectId: string) {
-        const tasks = await Task.find({ project: projectId })
-            .populate('assignedTo', 'email firstName lastName')
-            .populate('project', 'name description status');
-        return tasks;
-    }
+    // async getTasksByProject(projectId: string) {
+    //     const tasks = await Task.find({ project: projectId })
+    //         .populate('assignedTo', 'email firstName lastName')
+    //         .populate('project', 'name description status');
+    //     return tasks;
+    // }
 
 }

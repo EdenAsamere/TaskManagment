@@ -109,13 +109,13 @@ export const addTeamMember = async (req: Request, res: Response) => {
     }
 };
 
-export const getProjectTasks = async (req: Request, res: Response) => {
-    const projectId = req.params.id;
-    try {
-        const tasks = await projectService.getTasksByProject(projectId);
-        return res.status(200).json(tasks);
-    } catch (error) {
-        console.error('Error fetching project tasks:', error);
-        return res.status(404).json({ message: 'Project not found' });
-    }
-};
+// export const getProjectTasks = async (req: Request, res: Response) => {
+//     const projectId = req.params.id;
+//     try {
+//         const tasks = await projectService.getTasksByProject(projectId);
+//         return res.status(200).json(tasks);
+//     } catch (error) {
+//         console.error('Error fetching project tasks:', error);
+//         return res.status(404).json({ message: 'Project not found' });
+//     }
+// };

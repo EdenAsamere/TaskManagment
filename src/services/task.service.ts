@@ -14,7 +14,7 @@ export class TaskService {
 
   async getTasksByProject(projectId: string) {
     // Ensure project exists
-    const project = await Project.findById(projectId);
+    const project = await Project.findById({ _id: projectId });
     if (!project) throw new Error('Project not found');
     const tasks = await Task.find({ project: projectId });
     console.log('Tasks retrieved:', tasks);

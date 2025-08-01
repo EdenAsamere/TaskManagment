@@ -27,7 +27,7 @@ export const createTask = async (req: Request, res: Response) => {
 
 export const getTasksByProject = async (req: Request, res: Response) => {
   try {
-    const tasks = await taskService.getTasksByProject(req.params.projectId);
+    const tasks = await taskService.getTasksByProject(req.params.id);
     res.status(200).json({ data: tasks });
   } catch (error) {
     let message = 'Failed to get tasks by project';
