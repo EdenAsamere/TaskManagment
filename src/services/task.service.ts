@@ -13,7 +13,12 @@ export class TaskService {
   }
 
   async getTasksByProject(projectId: string) {
-    return Task.find({ project: projectId });
+    // Ensure project exists
+    const project = await Project.findById(projectId);
+    if (!project) throw new Error('Project not found');
+    const tasks = await Task.find({ project: projectId });
+    console.log('Tasks retrieved:', tasks);
+    return tasks;
   }
 
   async assignTaskToUser(taskId: string, userId: Types.ObjectId) {
