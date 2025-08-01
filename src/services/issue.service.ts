@@ -1,4 +1,3 @@
-import { Types } from 'mongoose';
 import Issue, { IIssue } from '../models/issue.model';
 
 export class IssueService {
