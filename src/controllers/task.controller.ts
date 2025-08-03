@@ -11,10 +11,15 @@ const notificationService = new NotificationService();
 export const createTask = async (req: Request, res: Response) => {
   try {
     const createdBy = (req as AuthRequest).user?.id;
+    const  project  = req.params.id;
     if (!createdBy) {
       return res.status(400).json({ message: 'createdBy ID is required.' });
     }
-    const task = await taskService.createTask({ ...req.body, createdBy: createdBy });
+    if (!project) {
+      return res.status(400).json({ message: 'Project ID is required.' });
+    }
+    const task = await taskService.createTask({ ...req.body, createdBy });
+    console.log('Task created:', task.project);
     res.status(201).json({ message: 'Task created', data: task });
   } catch (error) {
     let message = 'Failed to create task';

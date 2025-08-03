@@ -7,6 +7,7 @@ export class TaskService {
   async createTask(taskData: ITask) {
     // Ensure project exists
     const project = await Project.findById(taskData.project);
+    console.log('------------------',taskData.project)
     if (!project) throw new Error('Project not found');
     const task = new Task(taskData);
     return task.save();
