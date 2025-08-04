@@ -7,9 +7,21 @@ export const login = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
         const result = await authservice.login(email, password);
+
+        // Set refresh token in http-only cookie
+        res.cookie('refreshToken', result.refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+        });
+
         res.status(200).json({
             message: 'Login successful',
-            data: result,
+            data: {
+                user: result.user,
+                accessToken: result.accessToken
+            },
         });
     } catch (error) {
         let message = 'Login failed';
