@@ -4,7 +4,7 @@ import { authenticate } from '../middlewares/auth.middleware';
 
 const router = Router();
 
-router.post('/:projectId/create', authenticate, createTask);
+router.post('/:id/create', authenticate, createTask);
 router.get('/:taskId', authenticate, getTaskById);
 router.delete('/:taskId', authenticate, deleteTask);
 router.get('/', authenticate, getAllPaginatedTasks);

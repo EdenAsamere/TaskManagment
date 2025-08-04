@@ -9,30 +9,19 @@ import issueRoutes from './routes/issue.route';
 import taskRoutes from './routes/task.route';
 import notificationRoutes from './routes/notification.route';
 import cookieParser from 'cookie-parser';
-
 dotenv.config();
 
 const app = express();
 
-// Single CORS configuration
-app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true, // Allow cookies to be sent
-}));
+app.use(cors());
 
-// Body parsers
+// Body parsers first
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Handle preflight requests
-app.options('*', cors({
-  origin: 'http://localhost:3000',
-  credentials: true,
-}));
-
-// Routes
+// Routes after middleware
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/issues', issueRoutes);
