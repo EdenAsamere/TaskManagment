@@ -6,10 +6,10 @@ const authservice = new AuthService();
 export const login = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
-        const result = await authservice.login(email, password);
+        const { user, accessToken, refreshToken } = await authservice.login(email, password);
 
-        // Set refresh token in http-only cookie
-        res.cookie('refreshToken', result.refreshToken, {
+        // Set refresh token as httpOnly cookie
+        res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
@@ -17,11 +17,10 @@ export const login = async (req: Request, res: Response) => {
         });
 
         res.status(200).json({
-            message: 'Login successful',
             data: {
-                user: result.user,
-                accessToken: result.accessToken
-            },
+                user,
+                accessToken
+            }
         });
     } catch (error) {
         let message = 'Login failed';
