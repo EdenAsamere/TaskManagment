@@ -13,7 +13,12 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+// 👇 Update CORS config for credentials and custom headers
+app.use(cors({
+  origin: 'http://localhost:3000', // <-- your frontend URL
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 // Body parsers first
 app.use(express.json());
