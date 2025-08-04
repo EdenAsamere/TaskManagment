@@ -11,7 +11,7 @@ const notificationService = new NotificationService();
 export const createTask = async (req: Request, res: Response) => {
   try {
     const createdBy = (req as AuthRequest).user?.id;
-    const  project  = req.params.id;
+    const  project  = req.params.projectId;
     if (!createdBy) {
       return res.status(400).json({ message: 'createdBy ID is required.' });
     }
