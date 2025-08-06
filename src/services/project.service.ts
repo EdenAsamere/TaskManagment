@@ -28,8 +28,8 @@ export class ProjectService {
 
     async getProjectById(projectId: string) {
         const project = await Project.findById(projectId)
-            .populate('manager', 'email firstName lastName')
-            .populate('teamMembers', 'email firstName lastName');
+            .populate('manager', 'profilePicture email firstName lastName')
+            .populate('teamMembers', 'profilePicture email firstName lastName');
 
         if (!project) {
             throw new Error('Project not found');
