@@ -76,15 +76,17 @@ export class ProjectService {
       return Math.round((completed / total) * 100); // percentage
     }
 
-    async addTeamMember(projectId: string, userId: string) {
+    async addTeamMember(projectId: string, userIds: string[]) {
         const project = await Project.findById(projectId);
         if (!project) {
             throw new Error('Project not found');
         }
-        if (!project.teamMembers.includes(userId as any)) {
-            project.teamMembers.push(userId as any);
-            await project.save();
-        }   
+        userIds.forEach(userId => {
+            if (!project.teamMembers.includes(userId as any)) {
+                project.teamMembers.push(userId as any);
+            }
+        });
+        await project.save();
         return project;
     }
 

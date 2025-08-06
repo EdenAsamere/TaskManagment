@@ -99,12 +99,15 @@ export const markAsCompleted = async (req: Request, res: Response) => {
 
 export const addTeamMember = async (req: Request, res: Response) => {
     const projectId = req.params.id;
-    const userId = req.body.userId;
+    const userIds = req.body.userIds; // Expecting an array
+    if (!Array.isArray(userIds) || userIds.length === 0) {
+        return res.status(400).json({ message: 'userIds must be a non-empty array.' });
+    }
     try {
-        const updatedProject = await projectService.addTeamMember(projectId, userId);
+        const updatedProject = await projectService.addTeamMember(projectId, userIds);
         return res.status(200).json(updatedProject);
     } catch (error) {
-        console.error('Error adding team member:', error);
+        console.error('Error adding team members:', error);
         return res.status(404).json({ message: 'Project not found' });
     }
 };
