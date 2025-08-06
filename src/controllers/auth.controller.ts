@@ -55,3 +55,20 @@ export const register = async(req:Request, res:Response) =>{
         });
     }
 }
+
+export const getAllUsers = async (req: Request, res: Response) => {
+    try {
+        const users = await authservice.getAllUsers();
+        res.status(200).json({
+            data: users,
+        });
+    } catch (error) {
+        let message = 'Failed to fetch users';
+        if (error instanceof Error) {
+            message = error.message;
+        }
+        res.status(400).json({
+            message,
+        });
+    }
+}

@@ -26,5 +26,10 @@ export class AuthService {
         const refreshToken = generateRefreshToken(user._id.toString());
         return { user, accessToken, refreshToken };
     }
+
+    async getAllUsers() {
+        const users = await User.find({}, '-password'); // Exclude password field
+        return users;
+    }
 }   
 
