@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createProject, getProjectById, getAllPaginatedProjects, updateProject, deleteProject, getProjectProgress, setProjectDueDate, removeProjectDueDate } from '../controllers/project.controller';
+import { createProject, getProjectById, getAllPaginatedProjects, updateProject, deleteProject, getProjectProgress, setProjectDueDate, removeProjectDueDate, addTeamMember } from '../controllers/project.controller';
 import { authenticate } from '../middlewares/auth.middleware';
 import { getTasksByProject } from '../controllers/task.controller';
 
@@ -7,6 +7,7 @@ const router = Router();
 
 router.post('/create', authenticate, createProject);
 router.get('/:id', authenticate, getProjectById);
+router.patch('/:id/add-team-member', authenticate, addTeamMember)
 router.get('/', authenticate, getAllPaginatedProjects);
 router.get('/:id/tasks', authenticate, getTasksByProject); // Assuming this is to get tasks by project
 router.put('/:id', authenticate, updateProject);
